@@ -2,11 +2,10 @@ import { useState } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { getUser } from '../../utilities/users-service';
 import AuthPage from '../AuthPage/AuthPage';
-import NewOrderPage from '../NewOrderPage/NewOrderPage';
-import OrderHistoryPage from '../OrderHistoryPage/OrderHistoryPage';
 import NavBar from '../../components/NavBar/NavBar';
 
-import './App.css';
+import './App.scss';
+import IndexPage from '../IndexPage/IndexPage';
 
 export default function App() {
 	const [user, setUser] = useState(getUser());
@@ -17,13 +16,16 @@ export default function App() {
 				<>
 					<NavBar user={user} setUser={setUser} />
 					<Switch>
-						<Route path='/orders/new'>
+						<Route path=''>
+							<IndexPage />
+						</Route>
+						{/* <Route path='/orders/new'>
 							<NewOrderPage />
 						</Route>
 						<Route path='/orders'>
 							<OrderHistoryPage />
 						</Route>
-						<Redirect to='/orders' />
+						<Redirect to='/orders' /> */}
 					</Switch>
 				</>
 			) : (
