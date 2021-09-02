@@ -6,6 +6,8 @@ import NavBar from '../../components/NavBar/NavBar';
 
 import './App.scss';
 import IndexPage from '../IndexPage/IndexPage';
+import NewItemPage from '../Admin/NewItemPage/NewItemPage';
+import NewCatPage from '../Admin/NewCatPage/NewCatPage';
 
 export default function App() {
 	const [user, setUser] = useState(getUser());
@@ -16,7 +18,13 @@ export default function App() {
 				<>
 					<NavBar user={user} setUser={setUser} />
 					<Switch>
-						<Route path=''>
+						<Route path='/admin/new_item'>
+							<NewItemPage />
+						</Route>
+						<Route path='/admin/new_cat'>
+							<NewCatPage />
+						</Route>
+						<Route path='/'>
 							<IndexPage />
 						</Route>
 						{/* <Route path='/orders/new'>

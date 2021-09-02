@@ -26,7 +26,6 @@ const fake = [
 
 async function getAll(req, res) {
   try {
-      console.log('hi')
     res.json(fake);
   } catch (err) {
     // Client will check for non-2xx status code
