@@ -15,7 +15,9 @@ export default function NewCatPage() {
     function handleChange(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
       }
-      function handleSubmit() {}
+      function handleSubmit() {
+          
+      }
 
   return (
     <>
