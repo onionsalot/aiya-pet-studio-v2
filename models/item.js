@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const itemSchema = new Schema(
 	{
         name: { type: String, required: true },
-        category: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
+        category: { type: Schema.Types.ObjectId, ref: 'Category', required: true, default: undefined },
         price: { type: Number, required: true },
         description: { type: String, required: true },
         tags: { type: String },
@@ -15,5 +15,6 @@ const itemSchema = new Schema(
 		timestamps: true
 	}
 );
-  // items: [{ type: Schema.Types.ObjectId, ref: 'Item'}]
+
+
 module.exports = mongoose.model('Item', itemSchema);
