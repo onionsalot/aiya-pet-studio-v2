@@ -4,6 +4,7 @@ module.exports = {
     getAll,
     create,
     delete: deleteOne,
+    update,
   };
 
 
@@ -39,4 +40,14 @@ module.exports = {
       res.status(400).json(err);
     }
   }
-  
+
+  async function update(req, res) {
+    try {
+      const updatedItem = await Category.findByIdAndUpdate(req.params.id, {name: req.body.name}, {new: true});
+      res.status(200).json(updatedItem)
+    } catch (err) {
+      // Client will check for non-2xx status code
+      // 400 code  = bad request
+      res.status(400).json(err);
+    }
+  }

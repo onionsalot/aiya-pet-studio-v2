@@ -5,5 +5,7 @@ const CategoriesCtrl = require('../../controllers/api/categories');
 router.get('/', CategoriesCtrl.getAll);
 router.post('/create', CategoriesCtrl.create);
 router.delete('/delete/:id', CategoriesCtrl.delete)
+router.put('/update/:id', CategoriesCtrl.update); // update name
+// router.put();
 
 module.exports = router;
