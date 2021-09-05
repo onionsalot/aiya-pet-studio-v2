@@ -9,7 +9,7 @@ module.exports = {
 
 async function getAll(req, res) {
   try {
-    const items = await Item.find({}).populate('category');
+    const items = await Item.find({})
     res.status(201).json(items);
   } catch (err) {
     res.status(400).json(err);

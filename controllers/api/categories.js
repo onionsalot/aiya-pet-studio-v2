@@ -27,7 +27,7 @@ async function create(req, res) {
 
 async function deleteOne(req, res) {
   try {
-    const deletedItemID = await Category.findByIdAndRemove(req.params.id);
+    const deletedItemID = await Category.findOneAndDelete({_id : req.params.id});
     res.status(200).json(deletedItemID);
   } catch (err) {
     res.status(400).json(err);
