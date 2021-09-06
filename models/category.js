@@ -11,12 +11,12 @@ const categorySchema = new Schema(
   { timestamps: true }
 );
 
-categorySchema.post('findOneAndDelete', function (doc) {
+categorySchema.post('findOneAndDelete', async function (doc) {
   console.log("runs", doc._id)
 
-  Item.updateMany(
+  await Item.updateMany(
     { "category": doc._id },
-    { "category": undefined },
+    {"$set":{"category": null}},
 );
 })
 
