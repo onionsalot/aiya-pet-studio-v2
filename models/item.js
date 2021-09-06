@@ -7,7 +7,7 @@ const itemSchema = new Schema(
         category: { type: Schema.Types.ObjectId, ref: 'Category', required: true, default: undefined },
         price: { type: Number, required: true },
         description: { type: String, required: true },
-        tags: { type: String },
+        tags: [{ type: String }],
         type: { type: Boolean, default: true},
         images:[{ type: String }]
 	},

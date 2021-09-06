@@ -12,7 +12,7 @@ const categorySchema = new Schema(
 );
 
 categorySchema.post('findOneAndDelete', async function (doc) {
-  console.log("runs", doc._id)
+  // console.log("runs", doc._id)
 
   await Item.updateMany(
     { "category": doc._id },
