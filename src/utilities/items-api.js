@@ -10,10 +10,10 @@ export async function create(data) {
 return sendRequest(`${BASE_URL}/create`, 'POST', data);
 }
 
-export async function deleteOne(data) {
-	return sendRequest(`${BASE_URL}/delete/${data.id}`, 'DELETE');
+export async function deleteOne(id) {
+	return sendRequest(`${BASE_URL}/delete/${id}`, 'DELETE');
 }
 
-export async function update(data) {
-	return sendRequest(`${BASE_URL}/update/${data.id}`, 'PUT', data);
+export async function update(data, id) {
+	return sendRequest(`${BASE_URL}/update/${id}`, 'PUT', data);
 }
