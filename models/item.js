@@ -8,6 +8,7 @@ const itemSchema = new Schema(
         price: { type: Number, required: true },
         description: { type: String, required: true },
         tags: [{ type: String }],
+        options: [{ type: String }],
         type: { type: Boolean, default: true},
         images:[{ type: String }]
 	},
