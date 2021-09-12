@@ -33,13 +33,13 @@ async function addItem(req, res) {
             ],
           }
         );
+        res.json(createdCart);
     } else {
         console.log('Cart exists, Adding Item...')
 
-        // const newItem = await Cart.findOneAndUpdate( { userId: req.user, paid: false, "items.item" }, {"items": {$push: {"item": req.params.id, "quantity":2}}} )
-        // console.log(newItem)
+        const newItem = await Cart.findOneAndUpdate( { userId: req.user, paid: false, "items.item": {$ne: req.params.id}}, {$push: {items: {"item": req.params.id, "quantity":2}}} )
+        res.json(newItem);
     }
-    res.json();
   } catch (err) {
     res.status(400).json(err);
   }
