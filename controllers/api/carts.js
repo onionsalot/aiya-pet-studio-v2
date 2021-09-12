@@ -9,7 +9,8 @@ module.exports = {
 
 async function getCart(req, res) {
   try {
-    res.json();
+    const cart = await Cart.find({});
+    res.json(cart);
   } catch (err) {
     res.status(400).json(err);
   }
@@ -18,13 +19,25 @@ async function getCart(req, res) {
 async function addItem(req, res) {
     // addItem will create a cart if user has no "unpaid" cart, otherwise add item to unpaid cart.
   try {
-    const cart = await Cart.find({ userId: req.user });
-    if (!cart.length) {
+    const cart = await Cart.findOne({ userId: req.user, paid: false });
+    if (!cart) {
         console.log('No cart... Adding cart...')
-
+        const createdCart = await Cart.create(
+          {
+            userId: req.user,
+            items: [
+              {
+                item: req.params.id,
+                quantity: 1,
+              }
+            ],
+          }
+        );
     } else {
         console.log('Cart exists, Adding Item...')
 
+        // const newItem = await Cart.findOneAndUpdate( { userId: req.user, paid: false, "items.item" }, {"items": {$push: {"item": req.params.id, "quantity":2}}} )
+        // console.log(newItem)
     }
     res.json();
   } catch (err) {
@@ -42,7 +55,8 @@ async function updateQuantity(req, res) {
 
 async function deleteOne(req, res) {
   try {
-    res.json();
+    const deleted = await Cart.deleteMany({ });
+    res.json(deleted);
   } catch (err) {
     res.status(400).json(err);
   }
