@@ -9,41 +9,41 @@ module.exports = {
 
 async function getAll(req, res) {
   try {
-    const categories = await Category.find({});
-    res.json(categories);
+    const response = await Category.find({});
+    res.json({ success: true, response, msg: "OK" });
   } catch (err) {
-    res.status(400).json(err);
+    res.status(400).json({ success: false, err, msg: "error" });
   }
 }
 
 async function create(req, res) {
   try {
-    const category = await Category.create(req.body);
-    res.status(201).json(category);
+    const response = await Category.create(req.body);
+    res.json({ success: true, response, msg: "OK" });
   } catch (err) {
-    res.status(400).json(err);
+    res.status(400).json({ success: false, err, msg: "error" });
   }
 }
 
 async function deleteOne(req, res) {
   try {
-    const deletedItemID = await Category.findOneAndDelete({_id : req.params.id});
-    res.status(200).json(deletedItemID);
+    const response = await Category.findOneAndDelete({ _id: req.params.id });
+    res.json({ success: true, response, msg: "OK" });
   } catch (err) {
-    res.status(400).json(err);
+    res.status(400).json({ success: false, err, msg: "error" });
   }
 }
 
 async function update(req, res) {
   try {
-    const updatedItem = await Category.findByIdAndUpdate(
+    const response = await Category.findByIdAndUpdate(
       req.params.id,
       { name: req.body.name },
       { new: true }
     );
-    res.status(200).json(updatedItem);
+    res.json({ success: true, response, msg: "OK" });
   } catch (err) {
-    res.status(400).json(err);
+    res.status(400).json({ success: false, err, msg: "error" });
   }
 }
 

@@ -7,44 +7,40 @@ module.exports = {
   update,
 };
 
-
 async function getAll(req, res) {
   try {
-    const items = await Item.find({})
-    res.status(201).json(items);
+    const response = await Item.find({});
+    res.json({ success: true, response, msg: "OK" });
   } catch (err) {
-    res.status(400).json(err);
+    res.status(400).json({ success: false, err, msg: "error" });
   }
 }
 
-
 async function create(req, res) {
   try {
-    const item = await Item.create(req.body);
-    res.status(201).json(item);
+    const response = await Item.create(req.body);
+    res.json({ success: true, response, msg: "OK" });
   } catch (err) {
-    res.status(400).json(err);
+    res.status(400).json({ success: false, err, msg: "error" });
   }
 }
 
 async function deleteOne(req, res) {
   try {
-    const deletedItemID = await Item.findByIdAndRemove(req.params.id);
-    res.status(200).json(deletedItemID);
+    const response = await Item.findByIdAndRemove(req.params.id);
+    res.json({ success: true, response, msg: "OK" });
   } catch (err) {
-    res.status(400).json(err);
+    res.status(400).json({ success: false, err, msg: "error" });
   }
 }
 
 async function update(req, res) {
   try {
-    const updatedItem = await Item.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
-    res.status(200).json(updatedItem);
+    const response = await Item.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    res.json({ success: true, response, msg: "OK" });
   } catch (err) {
-    res.status(400).json(err);
+    res.status(400).json({ success: false, err, msg: "error" });
   }
 }

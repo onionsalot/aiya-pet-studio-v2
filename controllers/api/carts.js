@@ -10,10 +10,10 @@ module.exports = {
 
 async function getCart(req, res) {
   try {
-    const cart = await Cart.findOne({ userId: req.user, paid: false });
-    res.json(cart);
+    const response = await Cart.findOne({ userId: req.user, paid: false });
+    res.json({ success: true, response, msg: "OK" });
   } catch (err) {
-    res.status(400).json(err);
+    res.status(400).json({ success: false, err, msg: "error" });
   }
 }
 
@@ -23,7 +23,7 @@ async function addItem(req, res) {
     const cart = await Cart.findOne({ userId: req.user, paid: false });
     if (!cart) {
       console.log("No cart... Adding cart...");
-      const createdCart = await Cart.create({
+      const response = await Cart.create({
         userId: req.user,
         items: [
           {
@@ -32,25 +32,30 @@ async function addItem(req, res) {
           },
         ],
       });
-      res.json(createdCart);
+      res.json({ success: true, response, msg: "OK" });
     } else {
       console.log("Cart exists, Adding Item...");
 
-      const newItem = await Cart.findOneAndUpdate(
+      const response = await Cart.findOneAndUpdate(
         { userId: req.user, paid: false, "items.item": { $ne: req.params.id } },
         { $push: { items: { item: req.params.id, quantity: 1 } } },
         { new: true }
       );
+
+      const newItem =
+        response !== null
+          ? { success: true, response, msg: "OK" }
+          : { success: true, response, msg: "duplicate" };
       res.json(newItem);
     }
   } catch (err) {
-    res.status(400).json(err);
+    res.status(400).json({ success: false, err, msg: "error" });
   }
 }
 
 async function updateQuantity(req, res) {
   try {
-    const result = await Cart.findOneAndUpdate(
+    const response = await Cart.findOneAndUpdate(
       { userId: req.user, paid: false, "items.item": req.params.id },
       {
         $set: {
@@ -60,20 +65,20 @@ async function updateQuantity(req, res) {
       { new: true }
     );
 
-    res.json(result);
+    res.json({ success: true, response, msg: "OK" });
   } catch (err) {
-    res.status(400).json(err);
+    res.status(400).json({ success: false, err, msg: "error" });
   }
 }
 
 async function deleteOne(req, res) {
   // Postman testing only, will be removed for production.
   try {
-    const deleted = await Cart.updateOne(
+    const response = await Cart.updateOne(
       { userId: req.user, paid: false },
       { $pull: { items: { item: req.params.id } } }
     );
-    res.json(deleted);
+    res.json({ success: true, response, msg: "OK" });
   } catch (err) {
     res.status(400).json(err);
   }
@@ -82,8 +87,8 @@ async function deleteOne(req, res) {
 async function deleteAll(req, res) {
   // Postman testing only, will be removed for production.
   try {
-    const deleted = await Cart.deleteMany({});
-    res.json(deleted);
+    const response = await Cart.deleteMany({});
+    res.json({ success: true, response, msg: "OK" });
   } catch (err) {
     res.status(400).json(err);
   }
