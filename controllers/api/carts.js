@@ -72,7 +72,7 @@ async function updateQuantity(req, res) {
 }
 
 async function deleteOne(req, res) {
-  // Postman testing only, will be removed for production.
+  // remove item (not cart)
   try {
     const response = await Cart.updateOne(
       { userId: req.user, paid: false },
