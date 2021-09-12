@@ -4,7 +4,8 @@ module.exports = {
   getCart,
   addItem,
   updateQuantity,
-  delete: deleteAll,
+  delete: deleteOne,
+  deleteAll,
 };
 
 async function getCart(req, res) {
@@ -58,6 +59,17 @@ async function updateQuantity(req, res) {
     );
 
     res.json(result);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+}
+
+async function deleteOne(req, res) {
+  // Postman testing only, will be removed for production.
+  try {
+    const deleted = await Cart.updateOne({ userId: req.user, paid: false },
+      { $pull: { items: { item: req.params.id } } });
+    res.json(deleted);
   } catch (err) {
     res.status(400).json(err);
   }

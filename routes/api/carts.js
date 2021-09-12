@@ -6,6 +6,7 @@ const ensureLoggedIn = require('../../config/ensureLoggedIn');
 router.get('/', ensureLoggedIn , cartsCtrl.getCart);
 router.put('/add/:id', ensureLoggedIn , cartsCtrl.addItem);
 router.put('/update/:id', cartsCtrl.updateQuantity);
-router.delete('/delete', cartsCtrl.delete);
+router.delete('/deleteAll', cartsCtrl.deleteAll);
+router.delete('/delete/:id', cartsCtrl.delete);
 
 module.exports = router;
