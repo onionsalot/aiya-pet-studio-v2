@@ -10,7 +10,8 @@ module.exports = {
 
 async function getCart(req, res) {
   try {
-    const response = await Cart.findOne({ userId: req.user, paid: false });
+    const response = await Cart.findOne({ userId: req.user, paid: false }).populate('items.item', 'name');
+    // console.log(response.populated("items.item"))
     res.json({ success: true, response, msg: "OK" });
   } catch (err) {
     res.status(400).json({ success: false, err, msg: "error" });
