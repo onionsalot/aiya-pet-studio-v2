@@ -4,12 +4,12 @@ module.exports = {
   getCart,
   addItem,
   updateQuantity,
-  delete: deleteOne,
+  delete: deleteAll,
 };
 
 async function getCart(req, res) {
   try {
-    const cart = await Cart.find({});
+    const cart = await Cart.findOne({ userId: req.user, paid: false });
     res.json(cart);
   } catch (err) {
     res.status(400).json(err);
@@ -47,13 +47,24 @@ async function addItem(req, res) {
 
 async function updateQuantity(req, res) {
   try {
-    res.json();
+    const result = await Cart.findOneAndUpdate(
+      { userId: req.user, paid: false, "items.item": req.params.id},
+      {
+        $set: {
+          "items.$.quantity": Number(req.body.quantity),
+        },
+      },
+      { new: true}
+    );
+
+    res.json(result);
   } catch (err) {
     res.status(400).json(err);
   }
 }
 
-async function deleteOne(req, res) {
+async function deleteAll(req, res) {
+  // Postman testing only, will be removed for production.
   try {
     const deleted = await Cart.deleteMany({ });
     res.json(deleted);
