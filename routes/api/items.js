@@ -7,5 +7,6 @@ router.get('/', itemsCtrl.getAll);
 router.post('/create', ensureLoggedIn, itemsCtrl.create);
 router.delete('/delete/:id', ensureLoggedIn, itemsCtrl.delete);
 router.put('/update/:id', ensureLoggedIn, itemsCtrl.update);
+router.delete('/deleteAll', ensureLoggedIn , itemsCtrl.deleteAll);
 
 module.exports = router;

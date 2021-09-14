@@ -7,6 +7,6 @@ router.get('/', CategoriesCtrl.getAll);
 router.post('/create', ensureLoggedIn, CategoriesCtrl.create);
 router.delete('/delete/:id', ensureLoggedIn, CategoriesCtrl.delete)
 router.put('/update/:id', ensureLoggedIn, CategoriesCtrl.update); // update name
-// router.put('/addItem/:id/:iid', CategoriesCtrl.addItem);
+router.delete('/deleteAll', ensureLoggedIn , CategoriesCtrl.deleteAll);
 
 module.exports = router;

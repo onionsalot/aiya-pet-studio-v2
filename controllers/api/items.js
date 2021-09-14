@@ -5,6 +5,7 @@ module.exports = {
   create,
   delete: deleteOne,
   update,
+  deleteAll
 };
 
 async function getAll(req, res) {
@@ -42,5 +43,16 @@ async function update(req, res) {
     res.json({ success: true, response, msg: "OK" });
   } catch (err) {
     res.status(400).json({ success: false, err, msg: "error" });
+  }
+}
+
+
+async function deleteAll(req, res) {
+  // Postman testing only, will be removed for production.
+  try {
+    const response = await Item.deleteMany({});
+    res.json({ success: true, response, msg: "OK" });
+  } catch (err) {
+    res.status(400).json(err);
   }
 }
