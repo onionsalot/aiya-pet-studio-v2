@@ -15,6 +15,7 @@ export default function App() {
 	const [user, setUser] = useState(getUser());
 	const [items, setItems] = useState([]);
 	const [currentCategory, setCurrentCategory] = useState("")
+	console.log('get item')
 
 
 	useEffect(() => {
