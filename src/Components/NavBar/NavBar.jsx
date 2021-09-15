@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import * as userService from '../../utilities/users-service';
 import * as categoryService from '../../utilities/categories-api';
 
-export default function NavBar({ user, setUser, currentCategory }) {
+export default function NavBar({ user, setUser, setCurrentCategory }) {
 	const [categories, setCategories] = useState([])
 
 	useEffect(() => {
@@ -25,15 +25,15 @@ export default function NavBar({ user, setUser, currentCategory }) {
 	}
 
 	const showCategories = categories.map((e, idx) => {
-		return <> <Link to='/'>{e.name}</Link> &nbsp; | &nbsp;</>
+		return <> <li onClick={()=>setCurrentCategory(e.name)}>{e.name}</li> &nbsp; | &nbsp;</>
 	})
 
 	return (
-		<nav>
+		<ul>
 			{showCategories}
 			<Link to='' onClick={handleLogOut}>
 				Log Out
 			</Link>
-		</nav>
+		</ul>
 	);
 }
