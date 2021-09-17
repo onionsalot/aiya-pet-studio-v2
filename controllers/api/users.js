@@ -6,6 +6,7 @@ module.exports = {
 	create,
 	login,
 	checkToken,
+	addFav,
 };
 
 /*--- Helper Functions ---*/
@@ -47,4 +48,17 @@ function checkToken(req, res) {
 	// req.user will always be there for you when a token is sent
 	console.log('req.user', req.user);
 	res.json(req.exp);
+}
+
+async function addFav(req, res) {
+	try {
+		const response = await User.findOneAndUpdate(
+			{ _id: req.user, "favorites": { $ne: req.params.id } },
+			{ $push: req.params.id },
+			{ new: true }
+		  );
+		  res.json({ success: true, response, msg: "OK" });
+	} catch(err) {
+		res.status(400).json(err);
+	}
 }

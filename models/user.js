@@ -20,7 +20,7 @@ const userSchema = new Schema(
 			minLength: 3,
 			required: true,
 		},
-		favorties: [
+		favorites: [
 			{ type: Schema.Types.ObjectId, ref: "Item" }
 		]
 	},
