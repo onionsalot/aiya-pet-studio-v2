@@ -31,6 +31,12 @@ export default function NavBar({ user, setUser, setCurrentCategory }) {
 	return (
 		<ul>
 			{showCategories}
+			<Link to='/admin/new_cat'>
+				New Category
+			</Link>
+			<Link to='/admin/new_item'>
+				New Item
+			</Link>
 			<Link to='' onClick={handleLogOut}>
 				Log Out
 			</Link>

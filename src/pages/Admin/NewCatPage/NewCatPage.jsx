@@ -1,23 +1,24 @@
 import { useEffect, useState } from "react";
-// import * as itemsAPI from "../../utilities/items-api";
+import * as categoriesAPI from "../../../utilities/categories-api";
 import "./NewCatPage.scss";
 
 export default function NewCatPage() {
-    const [form, setForm] = useState({
-        name: "",
-        category: "",
-        price: "",
-        description: "",
-        tags: [],
-        type: "",
-        images: [],
-    })
-    function handleChange(e) {
-        setForm({ ...form, [e.target.name]: e.target.value });
-      }
-      function handleSubmit() {
-          
-      }
+  const [form, setForm] = useState({
+    name: "",
+  });
+  const [error, setError] = useState("")
+  function handleChange(e) {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  }
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const newCat = await categoriesAPI.create(form)
+    if (newCat.success === true && newCat.msg === "OK") {
+      setError("New Category Added!")
+    } else {
+      setError("Failed to add anything")
+    }
+  }
 
   return (
     <>
@@ -31,7 +32,9 @@ export default function NewCatPage() {
           onChange={handleChange}
           required
         />
+        <button type="submit">ADD CATEGORY</button>
       </form>
+      {error}
     </>
   );
 }
