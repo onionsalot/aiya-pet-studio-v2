@@ -1,21 +1,33 @@
 import { useEffect, useState } from "react";
-// import * as itemsAPI from "../../utilities/items-api";
+import * as itemsAPI from "../../../utilities/items-api";
 import "./NewItemPage.scss";
 
 export default function NewItemPage() {
   const [form, setForm] = useState({
     name: "",
     category: "",
-    price: "",
+    price: 0,
     description: "",
-    tags: "",
-    type: "",
-    images: "",
+    tags: [],
+    options: [],
+    type: true,
+    images: [],
   });
+  const [error, setError] = useState("")
+
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
-  function handleSubmit() {}
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const newCat = await itemsAPI.create(form)
+    if (newCat.success === true && newCat.msg === "OK") {
+      setError("New Item Added!")
+    } else {
+      setError("Failed to add anything")
+    }
+  }
+
 
   return (
     <>
@@ -33,7 +45,7 @@ export default function NewItemPage() {
         <input
           type="text"
           name="category"
-          value={form.name}
+          value={form.category}
           onChange={handleChange}
           required
         />
@@ -49,7 +61,7 @@ export default function NewItemPage() {
         <input
           type="text"
           name="description"
-          value={form.name}
+          value={form.description}
           onChange={handleChange}
           required
         />
@@ -57,15 +69,21 @@ export default function NewItemPage() {
         <input
           type="text"
           name="tags"
-          value={form.name}
+          value={form.tags}
           onChange={handleChange}
-          required
+        />
+        <label>options</label>
+        <input
+          type="text"
+          name="tags"
+          value={form.options}
+          onChange={handleChange}
         />
         <label>type</label>
         <input
           type="text"
           name="type"
-          value={form.name}
+          value={form.type}
           onChange={handleChange}
           required
         />
@@ -73,11 +91,12 @@ export default function NewItemPage() {
         <input
           type="text"
           name="tags"
-          value={form.name}
+          value={form.images}
           onChange={handleChange}
-          required
         />
+        <button type="submit">ADD ITEM</button>
       </form>
+    {error}
     </>
   );
 }
