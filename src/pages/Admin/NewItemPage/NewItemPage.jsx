@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import * as itemsAPI from "../../../utilities/items-api";
+import * as categoryService from '../../../utilities/categories-api';
 import "./NewItemPage.scss";
 
 export default function NewItemPage() {
+  const [categories, setCategories] = useState([])
   const [form, setForm] = useState({
     name: "",
     category: "",
@@ -14,6 +16,19 @@ export default function NewItemPage() {
     images: [],
   });
   const [error, setError] = useState("")
+
+  useEffect(() => {
+		async function getCat() {
+			await categoryService.getAll().then((res) => {
+				const mappedCategories = res.response.map((e) => {
+          return <option value={e.name}>{e.name}</option>
+        })
+        setCategories(mappedCategories)
+			})
+		}
+
+		getCat()
+	}, [])
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -75,10 +90,14 @@ export default function NewItemPage() {
         <label>options</label>
         <input
           type="text"
-          name="tags"
+          name="options"
           value={form.options}
           onChange={handleChange}
         />
+        <label>Options</label>
+          <select name="options">
+            {categories}
+          </select>
         <label>type</label>
         <input
           type="text"
@@ -90,7 +109,7 @@ export default function NewItemPage() {
         <label>images</label>
         <input
           type="text"
-          name="tags"
+          name="images"
           value={form.images}
           onChange={handleChange}
         />

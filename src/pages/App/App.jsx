@@ -52,7 +52,17 @@ export default function App() {
 					</Switch>
 				</>
 			) : (
-				<AuthPage setUser={setUser} />
+				<>
+					<NavBar user={user} setUser={setUser} setCurrentCategory={setCurrentCategory} />
+					<Switch>
+						<Route path='/'>
+							<IndexPage items={ items } currentCategory={ currentCategory }/>
+						</Route>
+						<Route path='/auth'>
+							<AuthPage setUser={setUser} />
+						</Route>
+					</Switch>
+				</>
 			)}
 		</main>
 	);
