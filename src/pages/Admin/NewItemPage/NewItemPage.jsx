@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import * as itemsAPI from "../../../utilities/items-api";
-import * as categoryService from '../../../utilities/categories-api';
+import * as categoryService from "../../../utilities/categories-api";
 import "./NewItemPage.scss";
 
 export default function NewItemPage() {
-  const [categories, setCategories] = useState([])
+  const [categories, setCategories] = useState([]);
   const [form, setForm] = useState({
     name: "",
     category: "",
@@ -15,34 +15,50 @@ export default function NewItemPage() {
     type: true,
     images: [],
   });
-  const [error, setError] = useState("")
+  const [tags, setTags] = useState("");
+  const [options, setOptions] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
-		async function getCat() {
-			await categoryService.getAll().then((res) => {
-				const mappedCategories = res.response.map((e) => {
-          return <option value={e.name}>{e.name}</option>
-        })
-        setCategories(mappedCategories)
-			})
-		}
+    async function getCat() {
+      await categoryService.getAll().then((res) => {
+        const mappedCategories = res.response.map((e) => {
+          return <option value={e.name}>{e.name}</option>;
+        });
+        setCategories(mappedCategories);
+      });
+    }
 
-		getCat()
-	}, [])
+    getCat();
+  }, []);
 
   function handleChange(e) {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    if (e.target.name === "tags") {
+      setTags(e.target.value);
+    } else if (e.target.name === "options") {
+      setOptions(e.target.value);
+    } else {
+      setForm({ ...form, [e.target.name]: e.target.value });
+    }
   }
   async function handleSubmit(e) {
     e.preventDefault();
-    const newCat = await itemsAPI.create(form)
+    const newCat = await itemsAPI.create(form);
     if (newCat.success === true && newCat.msg === "OK") {
-      setError("New Item Added!")
+      setError("New Item Added!");
     } else {
-      setError("Failed to add anything")
+      setError("Failed to add anything");
     }
   }
-
+  function keyPress(e) {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      if (e.target.value === "") return;
+      e.target.name === "tags" ? setForm({ ...form, [e.target.name]: [...form.tags, tags] }) : setForm({ ...form, [e.target.name]: [...form.options, options] })
+      setTags("");
+      setOptions("");
+    }
+  }
 
   return (
     <>
@@ -57,13 +73,7 @@ export default function NewItemPage() {
           required
         />
         <label>Category</label>
-        <input
-          type="text"
-          name="category"
-          value={form.category}
-          onChange={handleChange}
-          required
-        />
+        <select name="category">{categories}</select>
         <label>Price</label>
         <input
           type="number"
@@ -84,20 +94,20 @@ export default function NewItemPage() {
         <input
           type="text"
           name="tags"
-          value={form.tags}
+          value={tags}
           onChange={handleChange}
+          onKeyDown={keyPress}
         />
-        <label>options</label>
+        {form.tags}
+        <label>Options</label>
         <input
           type="text"
           name="options"
-          value={form.options}
+          value={options}
           onChange={handleChange}
+          onKeyDown={keyPress}
         />
-        <label>Options</label>
-          <select name="options">
-            {categories}
-          </select>
+        {form.options}
         <label>type</label>
         <input
           type="text"
@@ -115,7 +125,7 @@ export default function NewItemPage() {
         />
         <button type="submit">ADD ITEM</button>
       </form>
-    {error}
+      {error}
     </>
   );
 }

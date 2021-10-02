@@ -55,11 +55,11 @@ export default function App() {
 				<>
 					<NavBar user={user} setUser={setUser} setCurrentCategory={setCurrentCategory} />
 					<Switch>
-						<Route path='/'>
-							<IndexPage items={ items } currentCategory={ currentCategory }/>
-						</Route>
 						<Route path='/auth'>
 							<AuthPage setUser={setUser} />
+						</Route>
+						<Route path='/'>
+							<IndexPage items={ items } currentCategory={ currentCategory }/>
 						</Route>
 					</Switch>
 				</>
