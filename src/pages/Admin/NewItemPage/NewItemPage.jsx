@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import * as itemsAPI from "../../../utilities/items-api";
 import * as categoryService from "../../../utilities/categories-api";
 import "./NewItemPage.scss";
+import { set } from "mongoose";
 
 export default function NewItemPage() {
   const [categories, setCategories] = useState([]);
@@ -22,8 +23,8 @@ export default function NewItemPage() {
   useEffect(() => {
     async function getCat() {
       await categoryService.getAll().then((res) => {
-        const mappedCategories = res.response.map((e) => {
-          return <option value={e.name}>{e.name}</option>;
+        const mappedCategories = res.response.map((e, idx) => {
+          return <option value={e.name} key={idx}>{e.name}</option>;
         });
         setCategories(mappedCategories);
       });
@@ -59,7 +60,18 @@ export default function NewItemPage() {
       setOptions("");
     }
   }
+  function handleTagClick(e) {
+    e.preventDefault();
+    const update = (form.tags.filter(item => item.name !== e.target.name))
+    console.log(update)
+    setForm({ ...form, "tags": update})
+    
+  }
 
+
+  const mappedTags = form.tags.map((e, idx) => {
+    return <span key={idx} >{e}<button name={e} onClick={handleTagClick}>x</button> </span>
+  })
   return (
     <>
       <h1>New Item Page</h1>
@@ -98,7 +110,7 @@ export default function NewItemPage() {
           onChange={handleChange}
           onKeyDown={keyPress}
         />
-        {form.tags}
+        {mappedTags}
         <label>Options</label>
         <input
           type="text"
