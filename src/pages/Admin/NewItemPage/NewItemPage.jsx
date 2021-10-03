@@ -55,22 +55,28 @@ export default function NewItemPage() {
     if (e.keyCode === 13) {
       e.preventDefault();
       if (e.target.value === "") return;
-      e.target.name === "tags" ? setForm({ ...form, [e.target.name]: [...form.tags, tags] }) : setForm({ ...form, [e.target.name]: [...form.options, options] })
+      e.target.name === "tags" ? setForm({ ...form, [e.target.name]: [...form.tags, tags.trim()] }) : setForm({ ...form, [e.target.name]: [...form.options, options.trim()] })
       setTags("");
       setOptions("");
     }
   }
-  function handleTagClick(e) {
-    e.preventDefault();
-    const update = (form.tags.filter(item => item.name !== e.target.name))
-    console.log(update)
-    setForm({ ...form, "tags": update})
+  function handleDelete(index, type) {
+    if(type==="tags") {
+      const update = (form.tags.filter((item, idx) => idx !==index))
+      setForm({ ...form, "tags": update})
+    } else {
+      const update = (form.options.filter((item, idx) => idx !==index))
+      setForm({ ...form, "options": update})
+    }
     
   }
 
 
   const mappedTags = form.tags.map((e, idx) => {
-    return <span key={idx} >{e}<button name={e} onClick={handleTagClick}>x</button> </span>
+    return <span key={idx} >{e}<span onClick={() => handleDelete(idx, "tags")}>( x )</span> </span>
+  })
+  const mappedOptions = form.options.map((e, idx) => {
+    return <span key={idx} >{e}<span onClick={() => handleDelete(idx, "options")}>( x )</span> </span>
   })
   return (
     <>
@@ -119,7 +125,7 @@ export default function NewItemPage() {
           onChange={handleChange}
           onKeyDown={keyPress}
         />
-        {form.options}
+        {mappedOptions}
         <label>type</label>
         <input
           type="text"
