@@ -3,6 +3,7 @@ import * as itemsAPI from "../../../utilities/items-api";
 import * as categoryService from "../../../utilities/categories-api";
 import "./NewItemPage.scss";
 import { set } from "mongoose";
+import Uploading from "../../../components/Uploading/Uploading";
 
 export default function NewItemPage() {
   const [categories, setCategories] = useState([]);
@@ -127,20 +128,12 @@ export default function NewItemPage() {
         />
         {mappedOptions}
         <label>type</label>
-        <input
-          type="text"
-          name="type"
-          value={form.type}
-          onChange={handleChange}
-          required
-        />
+        <select name="type">
+          <option value={false}>Hidden</option>
+          <option value={true}>Show</option>
+        </select>
         <label>images</label>
-        <input
-          type="text"
-          name="images"
-          value={form.images}
-          onChange={handleChange}
-        />
+        <Uploading />
         <button type="submit">ADD ITEM</button>
       </form>
       {error}
