@@ -26,7 +26,7 @@ export default function NewItemPage() {
     async function getCat() {
       await categoryService.getAll().then((res) => {
         const mappedCategories = res.response.map((e, idx) => {
-          return <option value={e.name} key={idx}>{e.name}</option>;
+          return <option value={e._id} key={idx}>{e.name}</option>;
         });
         setCategories(mappedCategories);
       });
@@ -93,7 +93,7 @@ export default function NewItemPage() {
           required
         />
         <label>Category</label>
-        <select name="category">{categories}</select>
+        <select name="category" onChange={handleChange}>{categories}</select>
         <label>Price</label>
         <input
           type="number"
