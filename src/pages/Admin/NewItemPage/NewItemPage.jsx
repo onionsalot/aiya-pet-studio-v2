@@ -7,6 +7,7 @@ import Uploading from "../../../components/Uploading/Uploading";
 
 export default function NewItemPage() {
   const [categories, setCategories] = useState([]);
+  const [images, setImages] = useState([])
   const [form, setForm] = useState({
     name: "",
     category: "",
@@ -133,7 +134,7 @@ export default function NewItemPage() {
           <option value={true}>Show</option>
         </select>
         <label>images</label>
-        <Uploading />
+        <Uploading form={form} setForm={setForm}/>
         <button type="submit">ADD ITEM</button>
       </form>
       {error}
