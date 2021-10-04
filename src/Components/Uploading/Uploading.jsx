@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { uploadFile, deleteFile } from 'react-s3'
+import S3 from 'react-aws-s3';
 import './Upload.scss'
 
 
@@ -12,23 +12,33 @@ export default function Uploading({form, setForm}) {
         accessKeyId: process.env.REACT_APP_ACCESSKEYID,
         secretAccessKey: process.env.REACT_APP_SECRETACCESSKEY,
     }
+    
+    const ReactS3Client = new S3(config);
     async function uploadHandler(e) {
         e.preventDefault()
-        uploadFile(e.target.files[0], config)
-        .then((data) => {
+        const file = e.target.files[0]
+        const newFileName = e.target.files[0].name;
+
+        ReactS3Client
+        .uploadFile(file, newFileName)
+        .then(data => {
             console.log(data.key)
             setForm({ ...form, "images": [...form.images, data.key] })
         })
-        .catch((err) => {
+        .catch(err => {
             console.log(err)
         })
     }
 
     async function handleRemove(e) {
         e.preventDefault()
-        console.log(e.target.name)
-        deleteFile(e.target.name,config)
-        .then(response=> console.log(response))
+        ReactS3Client
+        .deleteFile(e.target.name)
+        .then(response=> {
+            if(response.ok === true) {
+                setForm({ ...form, "images": form.images.filter((image, idx) => image !==e.target.name) })
+            }
+        })
         .catch(err => console.error(err))
     }
     const display = form.images.map((image,idx) => { 
