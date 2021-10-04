@@ -15,7 +15,7 @@ export default function NewItemPage() {
     description: "",
     tags: [],
     options: [],
-    type: true,
+    type: false,
     images: [],
   });
   const [tags, setTags] = useState("");
@@ -25,10 +25,8 @@ export default function NewItemPage() {
   useEffect(() => {
     async function getCat() {
       await categoryService.getAll().then((res) => {
-        const mappedCategories = res.response.map((e, idx) => {
-          return <option value={e._id} key={idx}>{e.name}</option>;
-        });
-        setCategories(mappedCategories);
+        setCategories(res.response);
+        setForm({...form, "category" : res.response[0]._id})
       });
     }
 
@@ -40,6 +38,9 @@ export default function NewItemPage() {
       setTags(e.target.value);
     } else if (e.target.name === "options") {
       setOptions(e.target.value);
+    } else if (e.target.name === "type" ) {
+      const boolType = e.target.value === "true" ? true : false;
+      setForm({ ...form, [e.target.name]: boolType });
     } else {
       setForm({ ...form, [e.target.name]: e.target.value });
     }
@@ -80,6 +81,9 @@ export default function NewItemPage() {
   const mappedOptions = form.options.map((e, idx) => {
     return <span key={idx} >{e}<span onClick={() => handleDelete(idx, "options")}>( x )</span> </span>
   })
+  const mappedCategories = categories.map((e, idx) => {
+    return <option value={e._id} key={idx}>{e.name}</option>;
+  });
   return (
     <>
       <h1>New Item Page</h1>
@@ -93,7 +97,7 @@ export default function NewItemPage() {
           required
         />
         <label>Category</label>
-        <select name="category" onChange={handleChange}>{categories}</select>
+        <select name="category" onChange={handleChange}>{mappedCategories}</select>
         <label>Price</label>
         <input
           type="number"
@@ -129,9 +133,9 @@ export default function NewItemPage() {
         />
         {mappedOptions}
         <label>type</label>
-        <select name="type">
-          <option value={false}>Hidden</option>
-          <option value={true}>Show</option>
+        <select name="type" onChange={handleChange}>
+          <option value="false" selected>Hidden</option>
+          <option value="true">Show</option>
         </select>
         <label>images</label>
         <Uploading form={form} setForm={setForm}/>
