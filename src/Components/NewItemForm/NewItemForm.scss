@@ -39,3 +39,33 @@
     width: 200px;
   }
 }
+
+.under-options {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: gray;
+    border: 2px solid gray;
+    border-radius: 5px;
+    padding: 2px;
+}
+
+.option-boxes {
+    background-color: rgb(197, 197, 197);
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-top: 2px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 2px;
+}
+
+.option-delete {
+    background-color: white;
+    border: black 1px solid;
+    border-radius: 50%;
+    padding: 0 5px 1px 5px;
+    cursor:pointer;
+    text-align: center;
+    font-size: 12px;
+    margin-left: 2px;
+}

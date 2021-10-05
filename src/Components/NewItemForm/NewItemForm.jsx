@@ -74,10 +74,10 @@ export default function NewItemForm() {
 
 
   const mappedTags = form.tags.map((e, idx) => {
-    return <span key={idx} >{e}<span onClick={() => handleDelete(idx, "tags")}>( x )</span> </span>
+    return <span key={idx} className="option-boxes">{e}<span className="option-delete" onClick={() => handleDelete(idx, "tags")}>x</span> </span>
   })
   const mappedOptions = form.options.map((e, idx) => {
-    return <span key={idx} >{e}<span onClick={() => handleDelete(idx, "options")}>( x )</span> </span>
+    return <span key={idx} className="option-boxes">{e}<span className="option-delete" onClick={() => handleDelete(idx, "options")}>x</span> </span>
   })
   const mappedCategories = categories.map((e, idx) => {
     return <option value={e._id} key={idx}>{e.name}</option>;
@@ -143,7 +143,7 @@ export default function NewItemForm() {
             onChange={handleChange}
             onKeyDown={keyPress}
           />
-          {mappedTags}
+          <div className="under-options">{mappedTags}</div>
         </div>
 
         <div className="col-left">
@@ -157,7 +157,7 @@ export default function NewItemForm() {
             onChange={handleChange}
             onKeyDown={keyPress}
           />
-          {mappedOptions}
+          <div className="under-options">{mappedOptions}</div>
         </div>
 
         <div className="col-left">
