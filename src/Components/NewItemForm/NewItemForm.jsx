@@ -55,8 +55,10 @@ export default function NewItemForm() {
   function keyPress(e) {
     if (e.keyCode === 13) {
       e.preventDefault();
+      const values = e.target.value.trim().split(/\s+/)
+      console.log(values)
       if (e.target.value === "") return;
-      e.target.name === "tags" ? setForm({ ...form, [e.target.name]: [...form.tags, tags.trim()] }) : setForm({ ...form, [e.target.name]: [...form.options, options.trim()] })
+      e.target.name === "tags" ? setForm({ ...form, [e.target.name]: form.tags.concat(values) }) : setForm({ ...form, [e.target.name]: form.options.concat(values) })
       setTags("");
       setOptions("");
     }
@@ -133,7 +135,7 @@ export default function NewItemForm() {
         </div>
 
         <div className="col-left">
-          <label>tags</label>
+          <label>Tags</label>
         </div>
         <div className="col-right">
           <input
@@ -161,7 +163,7 @@ export default function NewItemForm() {
         </div>
 
         <div className="col-left">
-          <label>type</label>
+          <label>Type</label>
         </div>
         <div className="col-right">
           <select name="type" onChange={handleChange}>
@@ -171,7 +173,7 @@ export default function NewItemForm() {
         </div>
 
         <div className="col-left">
-          <label>images</label>
+          <label>Images</label>
         </div>
         <div className="col-right">
           <Uploading form={form} setForm={setForm}/>

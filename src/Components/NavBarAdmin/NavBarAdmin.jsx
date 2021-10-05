@@ -5,18 +5,18 @@ export default function NavBarAdmin({ user, setUser, setCurrentCategory }) {
 
 
 	return (
-		<ul className="vertical-List">
-            <li>
+		<div className="vertical-List">
+            <div>
                 <Link to='/admin/new_cat'>
                     New Category
                 </Link>
-            </li>
-            <li>
+            </div>
+            <div>
                 <Link to='/admin/new_item'>
                     New Item
                 </Link>
-            </li>
+            </div>
 
-		</ul>
+		</div>
 	);
 }
