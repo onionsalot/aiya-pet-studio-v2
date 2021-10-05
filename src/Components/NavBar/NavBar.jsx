@@ -37,12 +37,12 @@ export default function NavBar({ user, setUser, setCurrentCategory }) {
 	return (
 		<ul className="horizontal-list">
 			{showCategories}
-			<Link to='/admin/new_cat'>
-				New Category
+			&nbsp; | &nbsp;
+			&nbsp; | &nbsp;
+			<Link to='/admin' target="#">
+				Admin
 			</Link>
-			<Link to='/admin/new_item'>
-				New Item
-			</Link>
+			&nbsp; | &nbsp;
 			<Link to='' onClick={handleLogOut}>
 				Log Out
 			</Link>

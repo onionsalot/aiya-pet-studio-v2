@@ -28,7 +28,6 @@ export default function Uploading({form, setForm}) {
         fileName = fileName.slice(0,fileName.lastIndexOf("."))
         const randomNum = getRandomNum()
         const newFileName = fileName + randomNum + fileType;
-        console.log(fileType.toUpperCase())
         if(fileType.toUpperCase() === ".PNG" || fileType.toUpperCase() === ".JPG" || fileType.toUpperCase() === ".JPEG") {
             
             setLoading(true)
