@@ -1,5 +1,5 @@
-export default function AdminItemCard( { item } ) {
-    const d = new Date(item.createdAt)
+export default function AdminCatCard( { cat } ) {
+    const d = new Date(cat.createdAt)
     const dd = String(d.getDate()).padStart(2, '0');
     const mm = String(d.getMonth() + 1).padStart(2, '0');
     const yyyy = d.getFullYear();
@@ -7,9 +7,8 @@ export default function AdminItemCard( { item } ) {
   return (
     <>
         <tr>
-            <td>{item.name}</td>
-            <td>{item.category.name}</td>
-            <td>{item.type ? "Show" : "Hidden"}</td>
+            <td>{cat.name}</td>
+            <td>{cat._id}</td>
             <td>{dateString}</td>
             <td>Test Test Test</td>
         </tr>

@@ -3,9 +3,9 @@ import NavBarAdmin from "../../../components/NavBarAdmin/NavBarAdmin";
 import "./AdminItemPage.scss";
 
 export default function AdminItemPage({ items }) {
-  console.log(items);
-    const mappedItems = items.map((item,idx) => <AdminItemCard item={ item } key={ idx }/>)
-    console.log(mappedItems)
+  const mappedItems = items.map((item, idx) => (
+    <AdminItemCard item={item} key={idx} />
+  ));
   return (
     <div className="AdminItemPage">
       <nav>

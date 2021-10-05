@@ -12,12 +12,12 @@ export default function NavBarAdmin({ user, setUser, setCurrentCategory }) {
                 </Link>
             </div>
             <div>
-                <Link to='/admin'>
+                <Link to='/admin/categories'>
                     Category List
                 </Link>
             </div>
             <div>
-                <Link to='/admin'>
+                <Link to='/admin/orders'>
                     Order List
                 </Link>
             </div>
