@@ -56,7 +56,6 @@ export default function NewItemForm() {
     if (e.keyCode === 13) {
       e.preventDefault();
       const values = e.target.value.trim().split(/\s+/)
-      console.log(values)
       if (e.target.value === "") return;
       e.target.name === "tags" ? setForm({ ...form, [e.target.name]: form.tags.concat(values) }) : setForm({ ...form, [e.target.name]: form.options.concat(values) })
       setTags("");
