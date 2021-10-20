@@ -12,6 +12,8 @@ import NewItemPage from '../Admin/NewItemPage/NewItemPage';
 import NewCatPage from '../Admin/NewCatPage/NewCatPage';
 import AdminBanner from '../../components/AdminBanner/AdminBanner';
 import AdminIndexPage from '../Admin/AdminIndexPage/AdminIndexPage';
+import AdminItemPage from '../Admin/AdminItemPage/AdminItemPage';
+import AdminCatPage from '../Admin/AdminCatPage/AdminCatPage';
 
 export default function App() {
 	const [user, setUser] = useState(getUser());
@@ -42,6 +44,15 @@ export default function App() {
 							</Route>
 							<Route path='/admin/new_cat'>
 								<NewCatPage />
+							</Route>
+							<Route path='/admin/items'>
+								<AdminItemPage items={items}/>
+							</Route>
+							<Route path='/admin/categories'>
+								<AdminCatPage />
+							</Route>
+							<Route path='/admin/orders'>
+								<AdminItemPage items={items}/>
 							</Route>
 							<Route path='/admin'>
 								<AdminIndexPage userName={user.name} />

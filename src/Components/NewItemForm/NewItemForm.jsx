@@ -3,8 +3,10 @@ import * as itemsAPI from "../../utilities/items-api";
 import * as categoryService from "../../utilities/categories-api";
 import Uploading from "../Uploading/Uploading";
 import "./NewItemForm.scss"
+import { useLocation } from "react-router";
 
 export default function NewItemForm() {
+  const data = useLocation()
   const [categories, setCategories] = useState([]);
   const [form, setForm] = useState({
     name: "",
@@ -22,10 +24,27 @@ export default function NewItemForm() {
 
   useEffect(() => {
     async function getCat() {
-      await categoryService.getAll().then((res) => {
-        setCategories(res.response);
-        setForm({...form, "category" : res.response[0]._id})
-      });
+      if(data.state) {
+        await categoryService.getAll().then((res) => {
+          setCategories(res.response);
+          setForm({
+            name: data.state.name,
+            category: res.response[0]._id,
+            price: data.state.price,
+            description: data.state.description,
+            tags: data.state.tags,
+            options: data.state.options,
+            type: data.state.type,
+            images: [],
+          })
+        });
+      } else {
+        await categoryService.getAll().then((res) => {
+          setCategories(res.response);
+          setForm({...form, "category" : res.response[0]._id})
+        });
+
+      }
     }
 
     getCat();
@@ -85,7 +104,7 @@ export default function NewItemForm() {
   });
   return (
     <div className="NewItemForm">
-      <h1>New Item Page</h1>
+      {data.state? <h1>Update Item Page</h1>: <h1>New Item Page</h1>}
       <form autoComplete="off" onSubmit={handleSubmit}>
         <div className="col-left">
           <label>Name</label>

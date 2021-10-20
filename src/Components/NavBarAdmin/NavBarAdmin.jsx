@@ -7,17 +7,17 @@ export default function NavBarAdmin({ user, setUser, setCurrentCategory }) {
 	return (
 		<div className="vertical-List">
             <div>
-                <Link to='/admin'>
+                <Link to='/admin/items'>
                     Item List
                 </Link>
             </div>
             <div>
-                <Link to='/admin'>
+                <Link to='/admin/categories'>
                     Category List
                 </Link>
             </div>
             <div>
-                <Link to='/admin'>
+                <Link to='/admin/orders'>
                     Order List
                 </Link>
             </div>

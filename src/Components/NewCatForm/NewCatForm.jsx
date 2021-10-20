@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router";
 import * as categoriesAPI from "../../utilities/categories-api";
 
 export default function NewCatForm() {
+  const data = useLocation();
   const [form, setForm] = useState({
     name: "",
   });
@@ -18,10 +20,17 @@ export default function NewCatForm() {
       setError("Failed to add anything")
     }
   }
+  useEffect(() => {
+    if(data.state) {
+      setForm({name:data.state.name})
+    } else {
+      setForm({name: ""})
+    }
+  },[data.state])
 
   return (
     <>
-      <h1>New Cat Page</h1>
+      {data.state? <h1>Update Cat Page</h1>: <h1>New Cat Page</h1>}
       <form autoComplete="off" onSubmit={handleSubmit}>
         <label>Name</label>
         <input
